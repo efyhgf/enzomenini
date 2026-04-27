@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Portfolio — Prénom NOM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav">
+    <span class="nav-logo">PN.</span>
+    <ul class="nav-links">
+      <li><a href="#about">À propos</a></li>
+      <li><a href="#projects">Projets</a></li>
+      <li><a href="#skills">Compétences</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- HERO -->
+  <header class="hero" id="hero">
+    <div class="hero-inner">
+      <p class="hero-label">Portfolio · 2025</p>
+      <h1 class="hero-title">
+        Prénom<br>
+        <em>NOM</em>
+      </h1>
+      <p class="hero-subtitle">Étudiant en <strong>Votre Filière</strong> · Université / École</p>
+      <a href="#projects" class="btn-primary">Voir mes projets</a>
+    </div>
+    <div class="hero-deco" aria-hidden="true">
+      <div class="deco-circle"></div>
+      <div class="deco-line"></div>
+    </div>
+  </header>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <div class="container two-col">
+      <div class="col-label">
+        <span class="section-tag">01 · À propos</span>
+      </div>
+      <div class="col-content">
+        <h2 class="section-title">Qui suis-je ?</h2>
+        <p class="text-body">
+          Bonjour ! Je suis <strong>Prénom NOM</strong>, étudiant(e) en [votre filière] à [votre établissement].
+          Passionné(e) par [vos centres d'intérêt], je cherche à mettre en pratique mes connaissances à travers des projets concrets.
+        </p>
+        <p class="text-body">
+          Ce portfolio rassemble mes travaux académiques et personnels réalisés au cours de ma formation.
+          N'hésitez pas à me contacter pour toute opportunité de stage ou de collaboration.
+        </p>
+        <div class="about-meta">
+          <div class="meta-item">
+            <span class="meta-key">Formation</span>
+            <span class="meta-val">Votre diplôme, Année</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-key">Localisation</span>
+            <span class="meta-val">Ville, France</span>
+          </div>
+          <div class="meta-item">
+            <span class="meta-key">Disponibilité</span>
+            <span class="meta-val">Stage à partir de Mois YYYY</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="section section-alt" id="projects">
+    <div class="container">
+      <div class="section-head">
+        <span class="section-tag">02 · Projets</span>
+        <h2 class="section-title">Mes réalisations</h2>
+      </div>
+      <div class="projects-grid">
+
+        <!-- Carte projet 1 -->
+        <article class="project-card">
+          <div class="project-img placeholder-img">
+            <span>Aperçu / Image</span>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="tag">HTML</span>
+              <span class="tag">CSS</span>
+            </div>
+            <h3 class="project-title">Nom du projet</h3>
+            <p class="project-desc">
+              Courte description du projet : objectif, technologies utilisées, résultat obtenu. 2–3 phrases suffisent.
+            </p>
+            <div class="project-links">
+              <a href="#" class="link-btn">Voir le projet →</a>
+              <a href="#" class="link-ghost">GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Carte projet 2 -->
+        <article class="project-card">
+          <div class="project-img placeholder-img">
+            <span>Aperçu / Image</span>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="tag">Python</span>
+              <span class="tag">Data</span>
+            </div>
+            <h3 class="project-title">Nom du projet</h3>
+            <p class="project-desc">
+              Courte description du projet : objectif, technologies utilisées, résultat obtenu. 2–3 phrases suffisent.
+            </p>
+            <div class="project-links">
+              <a href="#" class="link-btn">Voir le projet →</a>
+              <a href="#" class="link-ghost">GitHub</a>
+            </div>
+          </div>
+        </article>
+
+        <!-- Carte projet 3 -->
+        <article class="project-card">
+          <div class="project-img placeholder-img">
+            <span>Aperçu / Image</span>
+          </div>
+          <div class="project-body">
+            <div class="project-tags">
+              <span class="tag">JavaScript</span>
+              <span class="tag">API</span>
+            </div>
+            <h3 class="project-title">Nom du projet</h3>
+            <p class="project-desc">
+              Courte description du projet : objectif, technologies utilisées, résultat obtenu. 2–3 phrases suffisent.
+            </p>
+            <div class="project-links">
+              <a href="#" class="link-btn">Voir le projet →</a>
+              <a href="#" class="link-ghost">GitHub</a>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section class="section" id="skills">
+    <div class="container two-col">
+      <div class="col-label">
+        <span class="section-tag">03 · Compétences</span>
+      </div>
+      <div class="col-content">
+        <h2 class="section-title">Savoir-faire</h2>
+
+        <div class="skills-group">
+          <h4 class="skills-cat">Langages &amp; Technologies</h4>
+          <div class="skills-list">
+            <div class="skill-item">
+              <span class="skill-name">HTML / CSS</span>
+              <div class="skill-bar"><div class="skill-fill" style="--w:90%"></div></div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">JavaScript</span>
+              <div class="skill-bar"><div class="skill-fill" style="--w:70%"></div></div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">Python</span>
+              <div class="skill-bar"><div class="skill-fill" style="--w:65%"></div></div>
+            </div>
+            <div class="skill-item">
+              <span class="skill-name">PHP</span>
+              <div class="skill-bar"><div class="skill-fill" style="--w:55%"></div></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="skills-group">
+          <h4 class="skills-cat">Outils</h4>
+          <div class="tags-row">
+            <span class="tag">Git / GitHub</span>
+            <span class="tag">VS Code</span>
+            <span class="tag">Figma</span>
+            <span class="tag">Linux</span>
+            <span class="tag">Votre outil</span>
+          </div>
+        </div>
+
+        <div class="skills-group">
+          <h4 class="skills-cat">Langues</h4>
+          <div class="tags-row">
+            <span class="tag">Français — natif</span>
+            <span class="tag">Anglais — B2</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section section-alt" id="contact">
+    <div class="container two-col">
+      <div class="col-label">
+        <span class="section-tag">04 · Contact</span>
+      </div>
+      <div class="col-content">
+        <h2 class="section-title">Me contacter</h2>
+        <p class="text-body">Une question, une opportunité de stage, une collaboration ?<br>Je suis disponible et réponds rapidement.</p>
+
+        <form class="contact-form" id="contactForm">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="name">Nom</label>
+              <input type="text" id="name" name="name" placeholder="Votre nom" required />
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="votre@email.com" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="subject">Sujet</label>
+            <input type="text" id="subject" name="subject" placeholder="Objet de votre message" />
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" placeholder="Votre message..." required></textarea>
+          </div>
+          <button type="submit" class="btn-primary">Envoyer le message</button>
+          <p class="form-status" id="formStatus"></p>
+        </form>
+
+        <div class="contact-links">
+          <a href="mailto:votre@email.com" class="contact-item">
+            <span class="contact-icon">✉</span> votre@email.com
+          </a>
+          <a href="https://linkedin.com/in/votre-profil" target="_blank" class="contact-item">
+            <span class="contact-icon">in</span> LinkedIn
+          </a>
+          <a href="https://github.com/votre-pseudo" target="_blank" class="contact-item">
+            <span class="contact-icon">⌥</span> GitHub
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <span>© 2025 Prénom NOM</span>
+    <span>Fait avec soin ☕</span>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,88 +1,214 @@
-/* ===========================
-   script.js — Portfolio
-   =========================== */
+// =========================
+// MENU BURGER (mobile)
+// =========================
+const burger = document.getElementById("burger");
+const navLinks = document.querySelector(".nav-links");
 
-// ── Burger menu mobile ──
-const burger = document.getElementById('burger');
-const navLinks = document.querySelector('.nav-links');
-
-burger.addEventListener('click', () => {
-  navLinks.classList.toggle('open');
-  burger.classList.toggle('open');
-});
-
-// Ferme le menu si on clique sur un lien
-navLinks.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    navLinks.classList.remove('open');
-    burger.classList.remove('open');
+if (burger) {
+  burger.addEventListener("click", () => {
+    navLinks.classList.toggle("open");
+    burger.classList.toggle("active");
   });
-});
+}
 
-// ── Scroll reveal ──
-const reveals = document.querySelectorAll(
-  '.section-title, .text-body, .project-card, .about-meta, .skills-group, .contact-form, .contact-links, .meta-item'
-);
-
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach((entry, i) => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add('visible');
-      observer.unobserve(entry.target);
+// =========================
+// SCROLL SMOOTH (ancres)
+// =========================
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener("click", function (e) {
+    const target = document.querySelector(this.getAttribute("href"));
+    if (target) {
+      e.preventDefault();
+      target.scrollIntoView({ behavior: "smooth" });
     }
   });
-}, { threshold: 0.12 });
-
-reveals.forEach(el => {
-  el.classList.add('reveal');
-  observer.observe(el);
 });
 
-// ── Nav active au scroll ──
-const sections = document.querySelectorAll('section[id], header[id]');
-const navAnchors = document.querySelectorAll('.nav-links a');
+// =========================
+// ANIMATION SKILLS (barres)
+// =========================
+const skillFills = document.querySelectorAll(".sk-fill");
 
-const sectionObserver = new IntersectionObserver((entries) => {
+const observer = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
-      navAnchors.forEach(a => a.classList.remove('active'));
-      const active = document.querySelector(`.nav-links a[href="#${entry.target.id}"]`);
-      if (active) active.classList.add('active');
+      entry.target.style.width = entry.target.style.getPropertyValue("--w");
     }
   });
-}, { rootMargin: '-40% 0px -55% 0px' });
+}, { threshold: 0.5 });
 
-sections.forEach(s => sectionObserver.observe(s));
+skillFills.forEach(fill => {
+  fill.style.width = "0";
+  observer.observe(fill);
+});
 
-// ── Formulaire de contact ──
-const form = document.getElementById('contactForm');
-const status = document.getElementById('formStatus');
+// =========================
+// FORMULAIRE CONTACT
+// =========================
+const form = document.getElementById("contactForm");
 
-form.addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const btn = form.querySelector('button[type="submit"]');
-  btn.disabled = true;
-  btn.textContent = 'Envoi en cours…';
-  status.textContent = '';
+if (form) {
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
 
-  // Simulation d'envoi (remplace par un vrai fetch vers ton backend PHP)
-  await new Promise(r => setTimeout(r, 1200));
+    const status = document.getElementById("formStatus");
 
-  // Pour un vrai envoi PHP, décommente ci-dessous et adapte l'URL :
-  /*
-  const data = new FormData(form);
-  const res = await fetch('send.php', { method: 'POST', body: data });
-  const json = await res.json();
-  if (!json.success) {
-    status.textContent = 'Erreur lors de l\'envoi. Réessaie plus tard.';
-    btn.disabled = false;
-    btn.textContent = 'Envoyer le message';
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const message = document.getElementById("message").value.trim();
+
+    if (!name || !email || !message) {
+      status.textContent = "Veuillez remplir tous les champs.";
+      status.style.color = "red";
+      return;
+    }
+
+    // Simulation envoi (pas de backend ici)
+    status.textContent = "Message envoyé ✔";
+    status.style.color = "green";
+
+    form.reset();
+  });
+}
+
+// =========================
+// PAGE PROJETS
+// =========================
+const viewProjects = document.getElementById("view-projects");
+const viewCompetences = document.getElementById("view-competences");
+const viewGallery = document.getElementById("view-gallery");
+
+let currentProject = null;
+let currentComp = null;
+
+// ===== OUVRIR COMPÉTENCES =====
+document.querySelectorAll(".proj-card").forEach(card => {
+  card.addEventListener("click", () => {
+    currentProject = card.dataset.project;
+
+    const name = card.querySelector(".proj-name").textContent;
+    document.getElementById("current-project-name").textContent = name;
+
+    switchView(viewCompetences);
+  });
+});
+
+// ===== RETOUR PROJETS =====
+const backToProjects = document.getElementById("back-to-projects");
+if (backToProjects) {
+  backToProjects.addEventListener("click", () => {
+    switchView(viewProjects);
+  });
+}
+
+// ===== OUVRIR GALERIE =====
+document.querySelectorAll(".comp-card").forEach(card => {
+  card.addEventListener("click", () => {
+    currentComp = card.dataset.comp;
+
+    document.getElementById("current-comp-name").textContent =
+      card.querySelector(".comp-name").textContent;
+
+    document.getElementById("gallery-project-name").textContent =
+      document.getElementById("current-project-name").textContent;
+
+    loadGallery();
+    switchView(viewGallery);
+  });
+});
+
+// ===== RETOUR COMPÉTENCES =====
+const backToCompetences = document.getElementById("back-to-competences");
+if (backToCompetences) {
+  backToCompetences.addEventListener("click", () => {
+    switchView(viewCompetences);
+  });
+}
+
+// =========================
+// SWITCH VIEW
+// =========================
+function switchView(view) {
+  document.querySelectorAll(".view").forEach(v => v.classList.remove("active"));
+  view.classList.add("active");
+}
+
+// =========================
+// GALERIE
+// =========================
+function loadGallery() {
+  const grid = document.getElementById("gallery-grid");
+  const empty = document.getElementById("gallery-empty");
+
+  if (!grid || !window.PROJECT_DATA) return;
+
+  grid.innerHTML = "";
+
+  const images = PROJECT_DATA[currentProject]?.[currentComp] || [];
+
+  if (images.length === 0) {
+    empty.style.display = "block";
     return;
   }
-  */
 
-  status.textContent = '✓ Message envoyé ! Je vous répondrai rapidement.';
-  form.reset();
-  btn.disabled = false;
-  btn.textContent = 'Envoyer le message';
+  empty.style.display = "none";
+
+  images.forEach((img, index) => {
+    const el = document.createElement("div");
+    el.className = "gallery-item";
+
+    el.innerHTML = `
+      <img src="${img.src}" alt="${img.caption}" data-index="${index}">
+    `;
+
+    grid.appendChild(el);
+  });
+
+  initLightbox(images);
+}
+
+// =========================
+// LIGHTBOX
+// =========================
+const lightbox = document.getElementById("lightbox");
+const lbImg = document.getElementById("lb-img");
+const lbCaption = document.getElementById("lb-caption");
+
+let currentIndex = 0;
+let currentImages = [];
+
+function initLightbox(images) {
+  currentImages = images;
+
+  document.querySelectorAll(".gallery-item img").forEach(img => {
+    img.addEventListener("click", () => {
+      currentIndex = parseInt(img.dataset.index);
+      openLightbox();
+    });
+  });
+}
+
+function openLightbox() {
+  updateLightbox();
+  lightbox.classList.add("open");
+}
+
+function updateLightbox() {
+  const img = currentImages[currentIndex];
+  lbImg.src = img.src;
+  lbCaption.textContent = img.caption || "";
+}
+
+document.getElementById("lb-close")?.addEventListener("click", () => {
+  lightbox.classList.remove("open");
+});
+
+document.getElementById("lb-prev")?.addEventListener("click", () => {
+  currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
+  updateLightbox();
+});
+
+document.getElementById("lb-next")?.addEventListener("click", () => {
+  currentIndex = (currentIndex + 1) % currentImages.length;
+  updateLightbox();
 });

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Projets — Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Syne:wght@400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body class="page-projets">
+
+  <nav class="nav">
+    <a href="index.html" class="nav-logo">PN<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#about">À propos</a></li>
+      <li><a href="projets.html" class="nav-active">Projets</a></li>
+      <li><a href="index.html#skills">Compétences</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="nav-burger" id="burger" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- PAGE HEADER -->
+  <header class="page-header">
+    <div class="container">
+      <a href="index.html" class="back-link">← Retour</a>
+      <h1 class="page-title">Mes <em>Projets</em></h1>
+      <p class="page-sub">Sélectionnez un projet pour découvrir les compétences associées.</p>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <main class="projets-main">
+    <div class="container">
+
+      <!-- VUE 1 : Grille des projets -->
+      <div id="view-projects" class="view active">
+        <div class="projects-grid">
+
+          <article class="proj-card" data-project="projet1">
+            <div class="proj-thumb placeholder-thumb">
+              <!-- Remplace par : <img src="images/projet1.jpg" alt="Nom du projet"/> -->
+              <span>Image projet</span>
+            </div>
+            <div class="proj-info">
+              <div class="proj-meta">
+                <span class="proj-year">2025</span>
+                <span class="proj-tag">HTML · CSS</span>
+              </div>
+              <h2 class="proj-name">Nom du projet 1</h2>
+              <p class="proj-desc">Courte description du projet, son objectif et son contexte pédagogique.</p>
+              <span class="proj-cta">Voir les compétences →</span>
+            </div>
+          </article>
+
+          <article class="proj-card" data-project="projet2">
+            <div class="proj-thumb placeholder-thumb">
+              <span>Image projet</span>
+            </div>
+            <div class="proj-info">
+              <div class="proj-meta">
+                <span class="proj-year">2025</span>
+                <span class="proj-tag">JavaScript</span>
+              </div>
+              <h2 class="proj-name">Nom du projet 2</h2>
+              <p class="proj-desc">Courte description du projet, son objectif et son contexte pédagogique.</p>
+              <span class="proj-cta">Voir les compétences →</span>
+            </div>
+          </article>
+
+          <article class="proj-card" data-project="projet3">
+            <div class="proj-thumb placeholder-thumb">
+              <span>Image projet</span>
+            </div>
+            <div class="proj-info">
+              <div class="proj-meta">
+                <span class="proj-year">2024</span>
+                <span class="proj-tag">Python</span>
+              </div>
+              <h2 class="proj-name">Nom du projet 3</h2>
+              <p class="proj-desc">Courte description du projet, son objectif et son contexte pédagogique.</p>
+              <span class="proj-cta">Voir les compétences →</span>
+            </div>
+          </article>
+
+          <!-- Ajoute d'autres projets ici en copiant un article.proj-card -->
+
+        </div>
+      </div>
+
+      <!-- VUE 2 : Grille des 6 compétences -->
+      <div id="view-competences" class="view">
+        <div class="view-header">
+          <button class="back-btn" id="back-to-projects">← Retour aux projets</button>
+          <div class="view-title-block">
+            <h2 class="view-title">Compétences de <em id="current-project-name">—</em></h2>
+            <p class="view-sub">Cliquez sur une compétence pour voir les réalisations associées.</p>
+          </div>
+        </div>
+
+        <div class="competences-grid">
+          <div class="comp-card" data-comp="c1">
+            <span class="comp-num">C1</span>
+            <h3 class="comp-name">Nom Compétence 1</h3>
+            <p class="comp-desc">Courte description de la compétence évaluée lors de l'examen.</p>
+            <span class="comp-arrow">→</span>
+          </div>
+          <div class="comp-card" data-comp="c2">
+            <span class="comp-num">C2</span>
+            <h3 class="comp-name">Nom Compétence 2</h3>
+            <p class="comp-desc">Courte description de la compétence évaluée lors de l'examen.</p>
+            <span class="comp-arrow">→</span>
+          </div>
+          <div class="comp-card" data-comp="c3">
+            <span class="comp-num">C3</span>
+            <h3 class="comp-name">Nom Compétence 3</h3>
+            <p class="comp-desc">Courte description de la compétence évaluée lors de l'examen.</p>
+            <span class="comp-arrow">→</span>
+          </div>
+          <div class="comp-card" data-comp="c4">
+            <span class="comp-num">C4</span>
+            <h3 class="comp-name">Nom Compétence 4</h3>
+            <p class="comp-desc">Courte description de la compétence évaluée lors de l'examen.</p>
+            <span class="comp-arrow">→</span>
+          </div>
+          <div class="comp-card" data-comp="c5">
+            <span class="comp-num">C5</span>
+            <h3 class="comp-name">Nom Compétence 5</h3>
+            <p class="comp-desc">Courte description de la compétence évaluée lors de l'examen.</p>
+            <span class="comp-arrow">→</span>
+          </div>
+          <div class="comp-card" data-comp="c6">
+            <span class="comp-num">C6</span>
+            <h3 class="comp-name">Nom Compétence 6</h3>
+            <p class="comp-desc">Courte description de la compétence évaluée lors de l'examen.</p>
+            <span class="comp-arrow">→</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- VUE 3 : Galerie d'images -->
+      <div id="view-gallery" class="view">
+        <div class="view-header">
+          <button class="back-btn" id="back-to-competences">← Retour aux compétences</button>
+          <div class="view-title-block">
+            <h2 class="view-title">
+              <em id="current-comp-name">—</em>
+              <span class="view-title-project"> · <span id="gallery-project-name">—</span></span>
+            </h2>
+            <p class="view-sub">Cliquez sur une image pour l'agrandir.</p>
+          </div>
+        </div>
+
+        <div class="gallery-grid" id="gallery-grid">
+          <!-- Les images sont injectées dynamiquement par JS -->
+        </div>
+
+        <div class="gallery-empty" id="gallery-empty" style="display:none">
+          <p>Aucune image pour cette compétence.<br>Ajoutez vos images dans <code>data.js</code>.</p>
+        </div>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- LIGHTBOX -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Image agrandie">
+    <button class="lb-close" id="lb-close" aria-label="Fermer">✕</button>
+    <button class="lb-prev" id="lb-prev" aria-label="Précédent">‹</button>
+    <button class="lb-next" id="lb-next" aria-label="Suivant">›</button>
+    <div class="lb-inner">
+      <img src="" alt="" id="lb-img"/>
+      <p class="lb-caption" id="lb-caption"></p>
+    </div>
+  </div>
+
+  <footer class="footer">
+    <span>© 2025 Prénom NOM</span>
+    <a href="index.html" class="footer-link">Accueil</a>
+    <span>Fait avec soin ☕</span>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,6 +1,6 @@
 const PROJECT_DATA = {
   projet1: {
-    c1: [
+    C1: [
       { src: "images/C1/habilitations_1.png", caption: "Gestion des habilitations" },
       { src: "images/C1/habilitations_2.png", caption: "Gestion des habilitations" }
     ],

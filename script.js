@@ -73,8 +73,6 @@ const viewProjects     = document.getElementById("view-projects");
 const viewCompetences  = document.getElementById("view-competences");
 const viewGallery      = document.getElementById("view-gallery");
 
-if (!viewProjects) return; // on n'est pas sur projets.html, on s'arrête là
-
 let currentProject = null;
 let currentComp    = null;
 

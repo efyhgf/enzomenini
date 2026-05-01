@@ -76,54 +76,55 @@ const viewGallery      = document.getElementById("view-gallery");
 let currentProject = null;
 let currentComp    = null;
 
-// ===== OUVRIR COMPÉTENCES depuis un projet =====
-document.querySelectorAll(".proj-card").forEach(card => {
-  card.addEventListener("click", () => {
-    currentProject = card.dataset.project;
-    document.getElementById("current-project-name").textContent =
-      card.querySelector(".proj-name").textContent;
-    switchView(viewCompetences);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+if (viewProjects) {
+
+  // ===== OUVRIR COMPÉTENCES depuis un projet =====
+  document.querySelectorAll(".proj-card").forEach(card => {
+    card.addEventListener("click", () => {
+      currentProject = card.dataset.project;
+      document.getElementById("current-project-name").textContent =
+        card.querySelector(".proj-name").textContent;
+      switchView(viewCompetences);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   });
-});
 
-// ===== RETOUR → liste des projets =====
-const backToProjects = document.getElementById("back-to-projects");
-if (backToProjects) {
-  backToProjects.addEventListener("click", () => {
-    switchView(viewProjects);
-    window.scrollTo({ top: 0, behavior: "smooth" });
+  // ===== RETOUR → liste des projets =====
+  const backToProjects = document.getElementById("back-to-projects");
+  if (backToProjects) {
+    backToProjects.addEventListener("click", () => {
+      switchView(viewProjects);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
+
+  // ===== OUVRIR GALERIE depuis une compétence =====
+  document.querySelectorAll(".comp-card").forEach(card => {
+    card.addEventListener("click", () => {
+      currentComp = card.dataset.comp;
+
+      const images = (PROJECT_DATA[currentProject] || {})[currentComp] || [];
+
+      document.getElementById("current-comp-name").textContent =
+        card.querySelector(".comp-name").textContent;
+      document.getElementById("gallery-project-name").textContent =
+        document.getElementById("current-project-name").textContent;
+
+      loadGallery(images);
+      switchView(viewGallery);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
   });
-}
 
-// ===== OUVRIR GALERIE depuis une compétence =====
-document.querySelectorAll(".comp-card").forEach(card => {
-  card.addEventListener("click", () => {
-    currentComp = card.dataset.comp;
+  // ===== RETOUR → liste des compétences =====
+  const backToCompetences = document.getElementById("back-to-competences");
+  if (backToCompetences) {
+    backToCompetences.addEventListener("click", () => {
+      switchView(viewCompetences);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+  }
 
-    // Récupère les images (tableau vide si la clé n'existe pas)
-    const images = (PROJECT_DATA[currentProject] || {})[currentComp] || [];
-
-    // Met à jour les titres
-    document.getElementById("current-comp-name").textContent =
-      card.querySelector(".comp-name").textContent;
-    document.getElementById("gallery-project-name").textContent =
-      document.getElementById("current-project-name").textContent;
-
-    // Charge la galerie (même si vide → affiche le message)
-    loadGallery(images);
-    switchView(viewGallery);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
-});
-
-// ===== RETOUR → liste des compétences =====
-const backToCompetences = document.getElementById("back-to-competences");
-if (backToCompetences) {
-  backToCompetences.addEventListener("click", () => {
-    switchView(viewCompetences);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  });
 }
 
 // =========================

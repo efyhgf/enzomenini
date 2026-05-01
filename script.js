@@ -29,7 +29,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
 // =========================
 const skillFills = document.querySelectorAll(".sk-fill");
 
-const observer = new IntersectionObserver(entries => {
+const skillObserver = new IntersectionObserver(entries => {
   entries.forEach(entry => {
     if (entry.isIntersecting) {
       entry.target.style.width = entry.target.style.getPropertyValue("--w");
@@ -39,7 +39,7 @@ const observer = new IntersectionObserver(entries => {
 
 skillFills.forEach(fill => {
   fill.style.width = "0";
-  observer.observe(fill);
+  skillObserver.observe(fill);
 });
 
 // =========================
@@ -50,11 +50,9 @@ const form = document.getElementById("contactForm");
 if (form) {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-
     const status = document.getElementById("formStatus");
-
-    const name = document.getElementById("name").value.trim();
-    const email = document.getElementById("email").value.trim();
+    const name    = document.getElementById("name").value.trim();
+    const email   = document.getElementById("email").value.trim();
     const message = document.getElementById("message").value.trim();
 
     if (!name || !email || !message) {
@@ -62,11 +60,8 @@ if (form) {
       status.style.color = "red";
       return;
     }
-
-    // Simulation envoi (pas de backend ici)
     status.textContent = "Message envoyé ✔";
     status.style.color = "green";
-
     form.reset();
   });
 }
@@ -74,54 +69,62 @@ if (form) {
 // =========================
 // PAGE PROJETS
 // =========================
-const viewProjects = document.getElementById("view-projects");
-const viewCompetences = document.getElementById("view-competences");
-const viewGallery = document.getElementById("view-gallery");
+const viewProjects     = document.getElementById("view-projects");
+const viewCompetences  = document.getElementById("view-competences");
+const viewGallery      = document.getElementById("view-gallery");
+
+if (!viewProjects) return; // on n'est pas sur projets.html, on s'arrête là
 
 let currentProject = null;
-let currentComp = null;
+let currentComp    = null;
 
-// ===== OUVRIR COMPÉTENCES =====
+// ===== OUVRIR COMPÉTENCES depuis un projet =====
 document.querySelectorAll(".proj-card").forEach(card => {
   card.addEventListener("click", () => {
     currentProject = card.dataset.project;
-
-    const name = card.querySelector(".proj-name").textContent;
-    document.getElementById("current-project-name").textContent = name;
-
+    document.getElementById("current-project-name").textContent =
+      card.querySelector(".proj-name").textContent;
     switchView(viewCompetences);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 });
 
-// ===== RETOUR PROJETS =====
+// ===== RETOUR → liste des projets =====
 const backToProjects = document.getElementById("back-to-projects");
 if (backToProjects) {
   backToProjects.addEventListener("click", () => {
     switchView(viewProjects);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
 
-// ===== OUVRIR GALERIE =====
+// ===== OUVRIR GALERIE depuis une compétence =====
 document.querySelectorAll(".comp-card").forEach(card => {
   card.addEventListener("click", () => {
     currentComp = card.dataset.comp;
 
+    // Récupère les images (tableau vide si la clé n'existe pas)
+    const images = (PROJECT_DATA[currentProject] || {})[currentComp] || [];
+
+    // Met à jour les titres
     document.getElementById("current-comp-name").textContent =
       card.querySelector(".comp-name").textContent;
-
     document.getElementById("gallery-project-name").textContent =
       document.getElementById("current-project-name").textContent;
 
-    loadGallery();
+    // Charge la galerie (même si vide → affiche le message)
+    loadGallery(images);
     switchView(viewGallery);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 });
 
-// ===== RETOUR COMPÉTENCES =====
+// ===== RETOUR → liste des compétences =====
 const backToCompetences = document.getElementById("back-to-competences");
 if (backToCompetences) {
   backToCompetences.addEventListener("click", () => {
     switchView(viewCompetences);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   });
 }
 
@@ -136,61 +139,80 @@ function switchView(view) {
 // =========================
 // GALERIE
 // =========================
-function loadGallery() {
-  const grid = document.getElementById("gallery-grid");
+function loadGallery(images) {
+  const grid  = document.getElementById("gallery-grid");
   const empty = document.getElementById("gallery-empty");
 
-  if (!grid || !window.PROJECT_DATA) return;
-
+  // Vide la grille à chaque ouverture
   grid.innerHTML = "";
 
-  const images = PROJECT_DATA[currentProject]?.[currentComp] || [];
-
-  if (images.length === 0) {
+  if (!images || images.length === 0) {
     empty.style.display = "block";
+    grid.style.display  = "none";
     return;
   }
 
   empty.style.display = "none";
+  grid.style.display  = "";
 
   images.forEach((img, index) => {
     const el = document.createElement("div");
     el.className = "gallery-item";
 
-    el.innerHTML = `
-      <img src="${img.src}" alt="${img.caption}" data-index="${index}">
-    `;
+    const imgEl = document.createElement("img");
+    imgEl.src            = img.src;
+    imgEl.alt            = img.caption || "";
+    imgEl.dataset.index  = index;
 
+    // Affiche un fond gris si l'image est introuvable
+    imgEl.onerror = () => {
+      el.innerHTML = `
+        <div class="gallery-item-placeholder">
+          <span class="icon">🖼</span>
+          <span>${img.caption || img.src}</span>
+        </div>`;
+    };
+
+    el.appendChild(imgEl);
     grid.appendChild(el);
   });
 
+  // Initialise la lightbox avec la liste à jour
   initLightbox(images);
 }
 
 // =========================
 // LIGHTBOX
 // =========================
-const lightbox = document.getElementById("lightbox");
-const lbImg = document.getElementById("lb-img");
+const lightbox  = document.getElementById("lightbox");
+const lbImg     = document.getElementById("lb-img");
 const lbCaption = document.getElementById("lb-caption");
 
-let currentIndex = 0;
+let currentIndex  = 0;
 let currentImages = [];
 
 function initLightbox(images) {
   currentImages = images;
 
-  document.querySelectorAll(".gallery-item img").forEach(img => {
-    img.addEventListener("click", () => {
-      currentIndex = parseInt(img.dataset.index);
-      openLightbox();
-    });
+  // Délégation sur la grille pour éviter les doublons d'écouteurs
+  const grid = document.getElementById("gallery-grid");
+  grid.addEventListener("click", (e) => {
+    const img = e.target.closest("img[data-index]");
+    if (!img) return;
+    currentIndex = parseInt(img.dataset.index);
+    openLightbox();
   });
 }
 
 function openLightbox() {
   updateLightbox();
   lightbox.classList.add("open");
+  document.body.style.overflow = "hidden";
+}
+
+function closeLightbox() {
+  lightbox.classList.remove("open");
+  document.body.style.overflow = "";
 }
 
 function updateLightbox() {
@@ -199,9 +221,7 @@ function updateLightbox() {
   lbCaption.textContent = img.caption || "";
 }
 
-document.getElementById("lb-close")?.addEventListener("click", () => {
-  lightbox.classList.remove("open");
-});
+document.getElementById("lb-close")?.addEventListener("click", closeLightbox);
 
 document.getElementById("lb-prev")?.addEventListener("click", () => {
   currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length;
@@ -211,4 +231,17 @@ document.getElementById("lb-prev")?.addEventListener("click", () => {
 document.getElementById("lb-next")?.addEventListener("click", () => {
   currentIndex = (currentIndex + 1) % currentImages.length;
   updateLightbox();
+});
+
+// Fermer la lightbox en cliquant sur le fond
+lightbox?.addEventListener("click", (e) => {
+  if (e.target === lightbox) closeLightbox();
+});
+
+// Fermer avec Échap, naviguer avec les flèches clavier
+document.addEventListener("keydown", (e) => {
+  if (!lightbox?.classList.contains("open")) return;
+  if (e.key === "Escape")      closeLightbox();
+  if (e.key === "ArrowLeft")  { currentIndex = (currentIndex - 1 + currentImages.length) % currentImages.length; updateLightbox(); }
+  if (e.key === "ArrowRight") { currentIndex = (currentIndex + 1) % currentImages.length; updateLightbox(); }
 });
